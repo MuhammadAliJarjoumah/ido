@@ -1,0 +1,109 @@
+.page {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+
+    .images-side {
+        width: 50%;
+        display: grid;
+        grid-template-rows: 65% 35%;
+        background-color: #212121;
+
+        .logo {
+            width: 70%;
+            place-self: center;
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .people {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+
+            .man {
+                width: 50%;
+            }
+
+            .woman {
+                width: 20%;
+            }
+
+            img {
+                object-fit: contain;
+            }
+        }
+    }
+
+    .fields-side {
+        width: 50%;
+        background: linear-gradient(to bottom, #8556A4, #2D2B52);
+        display: grid;
+        place-items: center;
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+            width: 70%;
+
+            .title {
+                color: #ffffff;
+                text-align: left;
+            }
+
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                row-gap: .1rem;
+                width: 70%;
+
+                label {
+                    color: #ffffff;
+                }
+
+                input {
+                    padding: 12px 20px;
+                    margin: 8px 0;
+                    display: inline-block;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                }
+
+                input:placeholder-shown,
+                input:not(:placeholder-shown) {
+                    background-color: #222222;
+                    color: #ffffff;
+                }
+            }
+
+            .sign-in-button {
+                width: 70%;
+                border-radius: 2rem;
+                outline: none;
+                padding: .4rem 0;
+                background-color: #B6A3E7;
+                color: #403564;
+                cursor: pointer;
+                border: 0.1rem solid transparent;
+                transition: all ease-in-out 0.2s;
+                font-weight: 550;
+
+                &:hover {
+                    border: 0.1rem solid #B6A3E7;
+                    background-color: transparent;
+                    color: #B6A3E7;
+                }
+
+                &:active {
+                    border: 0.1rem solid transparent;
+                    background-color: #B6A3E7;
+                    color: #403564;
+                }
+            }
+        }
+    }
+}
