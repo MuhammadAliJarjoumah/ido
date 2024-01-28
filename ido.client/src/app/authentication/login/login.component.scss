@@ -57,7 +57,7 @@
             .form-group {
                 display: flex;
                 flex-direction: column;
-                row-gap: .1rem;
+                row-gap: .3rem;
                 width: 70%;
 
                 label {
@@ -65,11 +65,10 @@
                 }
 
                 input {
-                    padding: 12px 20px;
-                    margin: 8px 0;
+                    padding: .6rem 1.2rem;
                     display: inline-block;
-                    border: 1px solid #ccc;
-                    border-radius: 4px;
+                    border: .1rem solid #ccc;
+                    border-radius: 0.2rem;
                     box-sizing: border-box;
                 }
 
@@ -77,6 +76,14 @@
                 input:not(:placeholder-shown) {
                     background-color: #222222;
                     color: #ffffff;
+                }
+
+                input.ng-dirty.ng-invalid {
+                    border: .1rem solid #a94442;
+                }
+
+                .alert {
+                    color: #a94442;
                 }
             }
 
