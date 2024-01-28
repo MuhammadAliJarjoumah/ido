@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:4200",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "C:\\Users\\Administrator\\Documents\\DEV\\ido\\ido.Server\\..\\ido.client",
+"MaxTimeoutInSeconds": "120"
+}
+}
