@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ido.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+806d4c894abbfd1b1dc6a966887bb11c1d443e0e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a641ffe1d69a663c942f84f27a9a4164030cbe8e")]
 [assembly: System.Reflection.AssemblyProductAttribute("ido.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ido.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

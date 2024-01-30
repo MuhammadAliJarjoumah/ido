@@ -35,7 +35,7 @@ public class UsersController : ControllerBase
     private string GenerateToken(User user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes("YourSecretKey"); // Replace with your secret key
+        var key = Encoding.ASCII.GetBytes("Maj@IDo"); // Replace with your secret key
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]
