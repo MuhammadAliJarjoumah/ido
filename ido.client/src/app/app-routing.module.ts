@@ -16,7 +16,7 @@ const routes: Routes = [
         (mod) => mod.DashboardModule
       ),
   },
-  { path: '', redirectTo: 'authentication/login', pathMatch: 'full' },
+ // { path: '', redirectTo: 'authentication/login', pathMatch: 'full' },
 
 ]
 

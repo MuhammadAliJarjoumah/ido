@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  form!: FormGroup;
 
-  form = this._formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: [null, Validators.required],
-  });
-
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(private _formBuilder: FormBuilder, private _authenticationService: AuthenticationService) {
+  }
+  ngOnInit(): void {
+    this.form = this._formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: [null, Validators.required],
+    });
   }
 
   get email() {
@@ -24,7 +27,21 @@ export class LoginComponent {
     return this.form.get('password');
   }
 
-  onSubmit() {
-    console.log('submit function called', this.form.value);
+  onLogin() {
+    if (this.form.valid) {
+      // console.log('submit function called', this.form.value);
+      this._authenticationService.login(this.form.value).subscribe({
+        next: (response) => {
+          console.log("response:", response);
+        },
+        error: (error) => {
+          console.error("error:", error);
+        }
+      })
+    }
+  }
+
+  private validateAllFormFields() {
+
   }
 }

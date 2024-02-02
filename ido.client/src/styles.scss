@@ -1,8 +1,35 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 body,
-h5 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
 }
 
 app-root {
     font-family: 'Helvetica Neue', 'Open Sans', sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Helvetica Neue", sans-serif;
+    box-sizing: border-box;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: transparent !important;
+}
+
+.mat-mdc-form-field:hover {
+    background-color: transparent !important;
+    opacity: 1;
 }

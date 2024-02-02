@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="fields-side">
-        <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form class="form" [formGroup]="form" (ngSubmit)="onLogin()">
             <h1 class="title">
                 Time To Work
             </h1>
@@ -18,8 +18,8 @@
                     Email
                 </label>
                 <input id="email" type="email" name="email" required formControlName="email" placeholder="Email">
-                <div *ngIf="email && email.invalid && (email.dirty || email.touched)" class="alert">
-                    <h5 *ngIf="email.errors">email is invalid.</h5>
+                <div *ngIf="form.controls['email'].dirty && form.hasError('required','email')" class="alert">
+                    <h5>*Email is invalid.</h5>
                 </div>
             </div>
             <div class="form-group">
@@ -27,11 +27,12 @@
                     Password
                 </label>
                 <input type="password" name="password" formControlName="password" required placeholder="Password">
-                <div *ngIf="password && password.invalid && (password.dirty || password.touched)" class="alert">
-                    <h5 *ngIf="password.errors">password is invalid.</h5>
+                <div *ngIf="form.controls['password'].dirty && form.hasError('required','password')" class="alert">
+                    <h5>*Password is invalid.</h5>
                 </div>
             </div>
-            <button class="sign-in-button" [disabled]="!form.valid" type="submit">
+            <button class="sign-in-button" [ngClass]="{'enabled-button':form.valid}"
+                [disabled]="form.invalid" type="submit">
                 SIGN IN
             </button>
         </form>

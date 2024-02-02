@@ -1,0 +1,70 @@
+.task-card {
+    padding: 20px 10px;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    box-sizing: border-box;
+    cursor: move;
+    background: #212529;
+    font-size: 14px;
+    border-radius: 6px;
+
+    .task-title {
+        input {
+            font-size: 16px;
+        }
+    }
+
+    .task-details {
+        display: flex;
+        flex-direction: row;
+        column-gap: 5%;
+
+        .task-property {
+            width: 25%;
+            color: #6C757D;
+        }
+
+        .estimate {
+            display: flex;
+
+            input{
+                border:1px 
+            }
+            .estimate-number {
+                width: 30%;
+            }
+
+            .estimate-unit {
+                width: 70%;
+            }
+        }
+
+        .options {
+            width: 80%;
+            height: 100%;
+
+
+        }
+    }
+
+    .property-value,
+    .estimate-unit,
+    .estimate-number {
+        width: 70%;
+        text-align: left;
+        background-color: #212529;
+        border: none;
+        color: #ffffff;
+    }
+
+    .chip-option {
+        border-radius: 10px;
+        padding: 5px;
+    }
+
+    .red {
+        background-color: red;
+    }
+}

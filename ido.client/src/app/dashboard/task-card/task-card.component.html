@@ -1,0 +1,41 @@
+<div class="task-card" [formGroup]="form">
+    <h2 class="task-title">
+        <input name="task-title" formControlName="title" placeholder="Add task title" class="property-value">
+    </h2>
+    <div class="task-details">
+        <label for="category" class="task-property" ma-input>
+            Category
+        </label>
+        <input matInput class="property-value" formControlName="category" placeholder="Add task category">
+    </div>
+    <div class="task-details">
+        <label for="dueDate" class="task-property">
+            Due Date
+        </label>
+        <input matInput class="property-value" formControlName="dueDate" placeholder="None">
+    </div>
+    <div class="task-details">
+        <label for="estimate" class="task-property">
+            Estimate
+        </label>
+        <div class="property-value estimate" formGroupName="estimate">
+            <input title="number" type="number" matInput formControlName="number" class="estimate-number"
+                placeholder="number">
+            <input matInput class="property-value estimate-unit" formControlName="unit" placeholder="unit">
+        </div>
+    </div>
+    <div class="task-details">
+        <label for="importance" class="task-property">
+            Importance
+        </label>
+        <div class="options">
+            <mat-select [value]="cardContent?.importance" name="importance" formControlName="importance">
+                <mat-option *ngFor="let option of importanceProperties" [value]="option.optionEnum">
+                    <mat-chip>
+                        {{option.value}}
+                    </mat-chip>
+                </mat-option>
+            </mat-select>
+        </div>
+    </div>
+</div>

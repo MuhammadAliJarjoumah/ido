@@ -1,0 +1,55 @@
+.header {
+    height: 68px;
+    background-color: #232323;
+    padding: 3px 34px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .left-side {
+        width: 94px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .right-side {
+        color: #ffffff;
+        display: flex;
+        flex-direction: row;
+        column-gap: 5px;
+        align-items: center;
+        position: relative;
+        width: 50%;
+        justify-content: right;
+
+        .tab {
+            position: absolute;
+            top: 45px;
+            right: 10px;
+            border: .1rem solid red;
+            width:10rem
+        }
+
+        .profile-img-container {
+            border-radius: 50%;
+            overflow: hidden;
+            width: 45px;
+            object-fit: cover;
+            height: 45px;
+            cursor: pointer;
+            transition: opacity ease-in-out 0.2s;
+
+            &:hover {
+                opacity: .7;
+            }
+        }
+
+        mat-icon {
+            cursor: pointer;
+        }
+
+    }
+}
