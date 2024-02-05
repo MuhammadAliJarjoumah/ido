@@ -1,10 +1,9 @@
+// task-card.component.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Importance } from '../models/importance-property.model';
-import { TaskValuesType } from '../models/task-values-type.model';
 import { DashboardService } from '../services/dashboard.service';
-import { TaskStatus } from '../models/task-status.model';
-import { ImportanceOptions } from '../models/importance-options.model';
+import { TaskValuesType } from '../models/task-values-type.model';
+import { Importance } from '../models/importance-property.model';
 
 @Component({
   selector: 'task-card',
@@ -12,24 +11,38 @@ import { ImportanceOptions } from '../models/importance-options.model';
   styleUrls: ['./task-card.component.scss'],
 })
 export class TaskCardComponent implements OnInit {
+  @Input() cardContent: TaskValuesType | undefined;
   form!: FormGroup;
   importanceProperties: Importance[] = [];
-  selectedImportance: ImportanceOptions | null = null;
-  @Input() cardContent: TaskValuesType | undefined;
-  @Input() taskStatus: TaskStatus = 0;
-
+  changeName: string = 'values changes';
   constructor(
-    private _formBuilder: FormBuilder,
-    private _dashboardService: DashboardService
+    private formBuilder: FormBuilder,
+    private dashboardService: DashboardService
   ) {}
 
   ngOnInit(): void {
-    // console.log('suiiiiii', this.cardContent);
     this.createForm();
     this.getImportanceValues();
+    this.populateEditValues(); // Call populateEditValues after creating the form
     this.form.valueChanges.subscribe((data) => {
-      console.log('Form changes', data);
-      this.onAnyformControlChange(data);
+      this.onValuesChanged(data);
+    });
+    console.log(this.cardContent, 'suiiiiiii');
+  }
+
+  createForm(): void {
+    this.form = this.formBuilder.group({
+      id: [null],
+      title: [''],
+      category: [''],
+      dueDate: [null],
+      estimate: this.formBuilder.group({
+        id: [null],
+        number: [null],
+        unit: [''],
+      }),
+      importance: [null],
+      status: [null],
     });
   }
 
@@ -66,56 +79,29 @@ export class TaskCardComponent implements OnInit {
   }
 
   populateEditValues() {
-    this.form.setValue({
-      id: this.cardContent?.id,
-      title: this.cardContent?.title,
-      category: this.cardContent?.category,
-      dueDate: this.cardContent?.dueDate,
-      estimate: {
-        id: this.cardContent?.estimate?.id,
-        number: this.cardContent?.estimate?.number,
-        unit: this.cardContent?.estimate?.unit,
-      },
-      importance: this.cardContent?.importance,
-    });
+    if (this.cardContent) {
+      this.form.setValue({
+        id: this.cardContent.id,
+        title: this.cardContent.title,
+        category: this.cardContent.category,
+        dueDate: this.cardContent.dueDate,
+        estimate: {
+          id: this.cardContent.estimate.id,
+          number: this.cardContent.estimate.number,
+          unit: this.cardContent.estimate.unit,
+        },
+        importance: this.cardContent.importance,
+        status: this.cardContent.status,
+      });
+    }
   }
 
-  createForm() {
-    this.form = this._formBuilder.group({
-      id: [null],
-      title: [''],
-      category: [''],
-      dueDate: [null],
-      estimate: this._formBuilder.group({
-        id: [null],
-        number: [null],
-        unit: [''],
-      }),
-      importance: [null],
-    });
-
-    this.populateEditValues();
+  getImportanceValues(): void {
+    this.importanceProperties = this.dashboardService.getImportanceValues();
   }
 
-  getImportanceValues() {
-    this.importanceProperties = [
-      { optionEnum: 0, value: '-' },
-      { optionEnum: 1, value: 'Low' },
-      { optionEnum: 2, value: 'Medium' },
-      { optionEnum: 3, value: 'High' },
-    ];
-    this.selectedImportance = this.cardContent?.importance || null;
-  }
-
-  onAnyformControlChange(data: TaskValuesType) {
-    const taskId = this.cardContent?.id;
-    this._dashboardService.updateTaskById(taskId, data).subscribe({
-      next: (response) => {
-        console.log('Update successful', response);
-      },
-      error: (error) => {
-        console.error('error', error);
-      },
-    });
+  onValuesChanged(data: TaskValuesType): void {
+    console.log('data that should change #edit text', data);
+    this.dashboardService.onAnyFormControlChange(data, this.changeName);
   }
 }

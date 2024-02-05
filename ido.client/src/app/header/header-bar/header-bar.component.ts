@@ -29,4 +29,11 @@ export class HeaderBarComponent {
   showTab() {
     this.isTabShowed = !this.isTabShowed;
   }
+  getUserEmail() {
+    this.userEmail = this._authenticationService.getLoggedInUserEmail();
+  }
+
+  logout() {
+    //loging-out functionality
+  }
 }

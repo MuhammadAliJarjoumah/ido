@@ -29,8 +29,14 @@
             position: absolute;
             top: 45px;
             right: 10px;
-            border: .1rem solid red;
-            width:10rem
+            width: 15rem;
+            background-color: #232323;
+            padding: 5px;
+            display: flex;
+            flex-direction: row;
+            column-gap: 5px;
+            border-radius: 10px;
+            border: #707070 1px solid;
         }
 
         .profile-img-container {
@@ -47,9 +53,32 @@
             }
         }
 
+        .email-side {
+            display: flex;
+            flex-direction: column;
+            row-gap: 5px;
+            place-items: center;
+            width: calc(75% - 5px);
+
+            h4 {
+                margin: 0;
+            }
+
+            .logout-btn {
+                cursor: pointer;
+                display: grid;
+                place-content: center;
+                grid-template-columns: auto auto;
+                transition: opacity ease-in-out 0.2s;
+
+                &:hover {
+                    opacity: 0.6;
+                }
+            }
+        }
+
         mat-icon {
             cursor: pointer;
         }
-
     }
 }

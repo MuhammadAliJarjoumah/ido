@@ -10,12 +10,14 @@
             <img src="../../../assets/images/Bitmap.png" alt="" (click)="showTab()">
         </div>
         <div class="tab" *ngIf="isTabShowed">
-            <div class="profile-img-container">
+            <div class="profile-img-container image-side">
                 <img src="../../../assets/images/Bitmap.png" alt="">
             </div>
-            <div class="email side">
-                <h2></h2>
-                <h3>Log Out</h3>
+            <div class="email-side">
+                <h4 class="user-email">
+                    {{userEmail? userEmail : 'example@gmail.com'}}
+                </h4>
+                <h3 class="logout-btn" (click)="logout()">Log Out <mat-icon>logout</mat-icon></h3>
             </div>
         </div>
     </div>

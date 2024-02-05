@@ -3,7 +3,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Importance } from '../models/importance-property.model';
 import { ImportanceOptions } from '../models/importance-options.model';
@@ -28,7 +28,8 @@ export class DashboardPageComponent implements OnInit {
   tasks: TaskValuesType[] = [];
   isTabShowed: boolean = false;
   userEmail: string | null = '';
-
+  @Output() taskMoved = new EventEmitter<TaskValuesType>();
+  changeName: string = 'status ';
   constructor(
     private _formBuilder: FormBuilder,
     private _dashboardService: DashboardService,
@@ -37,7 +38,6 @@ export class DashboardPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTasks();
-    // this.filterTasks();
     this._sharedService.newTodoItem$.subscribe({
       next: (respones) => {
         console.log(respones, 'new task in adding mode');
@@ -50,40 +50,41 @@ export class DashboardPageComponent implements OnInit {
     this.form = this._formBuilder.group({
       card: [null],
     });
+    this.form.valueChanges.subscribe((data) => {
+      console.log(data, 'suiiiii changesssss');
+
+      this.getTasks();
+    });
   }
 
   drop(event: CdkDragDrop<TaskValuesType[]>, status: TaskStatus) {
-    const movedTask = event.item.data;
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      console.log('suiiiiiii ssssss', event, status, movedTask);
-      movedTask.status = status;
-      this.onAnyformControlChange(movedTask);
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+    const movedTask = event.item.data.status;
+    if (event.item && event.item.data) {
+      if (event.previousContainer === event.container) {
+        moveItemInArray(
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+        console.log(status);
+      } else {
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+        movedTask.status = status;
+        this.onStatusChanged(movedTask);
+      }
     }
   }
-  onAnyformControlChange(data: TaskValuesType) {
-    const taskId = data.id;
 
-    this._dashboardService.updateTaskById(taskId, data).subscribe({
-      next: (response) => {
-        console.log('Update successful', response);
-      },
-      error: (error) => {
-        console.error('error', error);
-      },
-    });
+  onStatusChanged(data: TaskValuesType) {
+    console.log('data that should change #Drag Drop', data);
+    this._dashboardService.onAnyFormControlChange(data, this.changeName);
   }
+
   categoryUpdated() {
     console.log('category');
   }
@@ -91,8 +92,9 @@ export class DashboardPageComponent implements OnInit {
   getTasks() {
     this._dashboardService.getTasks().subscribe({
       next: (response: TaskValuesType[]) => {
-        console.log('response:', response), (this.tasks = response);
-        this.filterTasks();
+        console.log('response:', response);
+        this.tasks = response;
+        this.filterTasks(response);
       },
       error: (error) => {
         console.error('error:', error);
@@ -100,8 +102,8 @@ export class DashboardPageComponent implements OnInit {
     });
   }
 
-  filterTasks() {
-    for (const task of this.tasks) {
+  filterTasks(tasks: TaskValuesType[]) {
+    for (const task of tasks) {
       if (task.status == this.taskStatus.TODO) {
         this.todo.push(task);
       } else if (task.status == this.taskStatus.DOING) {

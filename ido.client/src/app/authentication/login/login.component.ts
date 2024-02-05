@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (this.form.valid) {
-      // console.log('submit function called', this.form.value);
       this._authenticationService.login(this.form.value).subscribe({
         next: (response) => {
           console.log("response:", response);
@@ -39,9 +38,5 @@ export class LoginComponent implements OnInit {
         }
       })
     }
-  }
-
-  private validateAllFormFields() {
-
   }
 }

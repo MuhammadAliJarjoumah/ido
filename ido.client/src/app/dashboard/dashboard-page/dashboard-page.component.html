@@ -1,26 +1,4 @@
 <div class="page">
-    <!-- <div class="header">
-        <div class="left-side">
-            <img src="../../../assets/images/Logo.png" alt="">
-
-        </div>
-        <div class="right-side">
-            <mat-icon></mat-icon>
-            <mat-icon title="Add Item" (click)="addNewTask()">add</mat-icon>
-            <div class="profile-img-container">
-                <img src="../../../assets/images/Bitmap.png" alt="" (click)="showTab()">
-            </div>
-            <div class="tab" *ngIf="isTabShowed">
-                <div class="profile-img-container">
-                    <img src="../../../assets/images/Bitmap.png" alt="">
-                </div>
-                <div class="email side">
-                    <h2></h2>
-                    <h3>Log Out</h3>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <div cdkDropListGroup class="page-content">
         <div class="list-container">
             <div class="task-header">
@@ -29,8 +7,7 @@
             </div>
             <div cdkDropList [cdkDropListData]="todo" class="tasks-container"
                 (cdkDropListDropped)="drop($event,taskStatus.TODO)">
-                <task-card class="task-card" *ngFor="let task of todo" cdkDrag [formGroup]="form" [cardContent]="task"
-                    [cardContent]="task" [cdkDragData]="task">
+                <task-card class="task-card" *ngFor="let task of todo" cdkDrag [formGroup]="form" [cardContent]="task">
                 </task-card>
             </div>
         </div>
@@ -42,8 +19,7 @@
 
             <div cdkDropList [cdkDropListData]="doing" class="tasks-container"
                 (cdkDropListDropped)="drop($event,taskStatus.DOING)">
-                <task-card class="task-card" *ngFor="let task of doing" cdkDrag [formGroup]="form" [cardContent]="task"
-                    [cardContent]="task" [cdkDragData]="task">
+                <task-card class="task-card" *ngFor="let task of doing" cdkDrag [formGroup]="form" [cardContent]="task">
                 </task-card>
             </div>
         </div>
@@ -54,8 +30,7 @@
             </div>
             <div cdkDropList [cdkDropListData]="done" class="tasks-container"
                 (cdkDropListDropped)="drop($event,taskStatus.DONE)">
-                <task-card class="task-card" *ngFor="let task of done" cdkDrag [formGroup]="form" [cardContent]="task"
-                    [cardContent]="task" [cdkDragData]="task">
+                <task-card class="task-card" *ngFor="let task of done" cdkDrag [formGroup]="form" [cardContent]="task">
                 </task-card>
             </div>
         </div>

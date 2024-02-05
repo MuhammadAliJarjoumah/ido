@@ -3,28 +3,27 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "authentication",
+    path: 'authentication',
     loadChildren: () =>
-      import("./authentication/authentication.module").then(
+      import('./authentication/authentication.module').then(
         (mod) => mod.AuthenticationModule
       ),
   },
   {
-    path: "dashboard",
+    path: 'dashboard',
     loadChildren: () =>
-      import("./dashboard/dashboard.module").then(
-        (mod) => mod.DashboardModule
-      ),
+      import('./dashboard/dashboard.module').then((mod) => mod.DashboardModule),
   },
- // { path: '', redirectTo: 'authentication/login', pathMatch: 'full' },
-
-]
+  // { path: '', redirectTo: 'authentication/login', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard/dashboard', pathMatch: 'full' },
+];
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes),
-  RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })
+  imports: [
+    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

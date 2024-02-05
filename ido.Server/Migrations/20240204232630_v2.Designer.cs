@@ -12,7 +12,7 @@ using ido.Server.Context;
 namespace ido.Server.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    [Migration("20240202114839_v2")]
+    [Migration("20240204232630_v2")]
     partial class v2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

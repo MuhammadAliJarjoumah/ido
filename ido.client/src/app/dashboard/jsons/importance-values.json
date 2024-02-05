@@ -1,0 +1,18 @@
+[
+    {
+        "optionEnum": 0,
+        "value": "-"
+    },
+    {
+        "optionEnum": 1,
+        "value": "Low"
+    },
+    {
+        "optionEnum": 2,
+        "value": "Medium"
+    },
+    {
+        "optionEnum": 3,
+        "value": "High"
+    }
+]

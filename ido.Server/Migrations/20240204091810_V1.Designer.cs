@@ -12,8 +12,8 @@ using ido.Server.Context;
 namespace ido.Server.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    [Migration("20240202105218_v1")]
-    partial class v1
+    [Migration("20240204091810_V1")]
+    partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
