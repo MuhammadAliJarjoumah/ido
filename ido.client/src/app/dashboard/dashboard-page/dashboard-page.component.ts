@@ -58,25 +58,25 @@ export class DashboardPageComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<TaskValuesType[]>, status: TaskStatus) {
-    const movedTask = event.item.data.status;
-    if (event.item && event.item.data) {
-      if (event.previousContainer === event.container) {
-        moveItemInArray(
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex
-        );
-        console.log(status);
-      } else {
-        transferArrayItem(
-          event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex
-        );
-        movedTask.status = status;
-        this.onStatusChanged(movedTask);
-      }
+    const movedTask = event.item.data;
+    console.log(movedTask, 'movedTask');
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      console.log(status);
+    } else {
+      movedTask.status = status;
+      console.log(movedTask.status, 'status');
+      this.onStatusChanged(movedTask);
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
     }
   }
 

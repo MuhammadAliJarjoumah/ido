@@ -1,4 +1,3 @@
-import ImportancesValues from '../jsons/importance-values.json';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,7 +6,6 @@ import { TaskValuesType } from '../models/task-values-type.model';
   providedIn: 'root',
 })
 export class DashboardService {
-  importancesValues = ImportancesValues;
   private baseUrl: string = 'https://localhost:7065/api/Tasks/';
 
   constructor(private _http: HttpClient) {}
@@ -30,16 +28,34 @@ export class DashboardService {
   }
 
   getImportanceValues() {
-    return this.importancesValues;
+    const importances = [
+      {
+        optionEnum: 0,
+        value: '-',
+      },
+      {
+        optionEnum: 1,
+        value: 'Low',
+      },
+      {
+        optionEnum: 2,
+        value: 'Medium',
+      },
+      {
+        optionEnum: 3,
+        value: 'High',
+      },
+    ];
+    return importances;
   }
 
-  onAnyFormControlChange(data: TaskValuesType,changeType:string): void {
+  onAnyFormControlChange(data: TaskValuesType, changeType: string): void {
     this.updateTaskById(data).subscribe({
       next: (response) => {
-        console.log('Update successful',changeType, response);
+        console.log('Update successful', changeType, response);
       },
       error: (error) => {
-        console.error('Error updating ',changeType, error);
+        console.error('Error updating ', changeType, error);
       },
     });
   }
