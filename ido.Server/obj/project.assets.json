@@ -51,7 +51,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.SpaProxy/6.0.26": {
+      "Microsoft.AspNetCore.SpaProxy/6.0.36": {
         "type": "package",
         "compile": {
           "lib/net6.0/Microsoft.AspNetCore.SpaProxy.dll": {}
@@ -984,10 +984,10 @@
         "microsoft.aspnetcore.jsonpatch.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.SpaProxy/6.0.26": {
-      "sha512": "JU5k3wGGDnOE9LAmVBZgvii3RO0u/rpW4OuRtZ/f3oLM5GnN4CB7nvs2BDcHY7jsx+bVNkiI3fm8sCfGwrhg3Q==",
+    "Microsoft.AspNetCore.SpaProxy/6.0.36": {
+      "sha512": "33MgFYdm9iAcb/ZtxS+QuZNe21H0JmjOm1WNJYIDyED5f+gfJApv2tOkGLM7BQGEk/0dlCwcTnPP8JSVLy7M3Q==",
       "type": "package",
-      "path": "microsoft.aspnetcore.spaproxy/6.0.26",
+      "path": "microsoft.aspnetcore.spaproxy/6.0.36",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -995,7 +995,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "build/Microsoft.AspNetCore.SpaProxy.targets",
         "lib/net6.0/Microsoft.AspNetCore.SpaProxy.dll",
-        "microsoft.aspnetcore.spaproxy.6.0.26.nupkg.sha512",
+        "microsoft.aspnetcore.spaproxy.6.0.36.nupkg.sha512",
         "microsoft.aspnetcore.spaproxy.nuspec"
       ]
     },
@@ -2614,6 +2614,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2626,6 +2627,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2680,6 +2686,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.32, 6.0.32]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.32, 6.0.32]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.32, 6.0.32]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.32, 6.0.32]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -2688,7 +2712,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
       }
     }
   }

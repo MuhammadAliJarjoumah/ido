@@ -4,13 +4,13 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Importance } from '../models/importance-property.model';
-import { ImportanceOptions } from '../models/importance-options.model';
-import { DashboardService } from '../services/dashboard.service';
-import { TaskValuesType } from '../models/task-values-type.model';
-import { TaskStatus } from '../models/task-status.model';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { SharedService } from 'src/app/shared/shared.service';
+import { ImportanceOptions } from '../models/importance-options.model';
+import { Importance } from '../models/importance-property.model';
+import { TaskStatus } from '../models/task-status.model';
+import { TaskValuesType } from '../models/task-values-type.model';
+import { DashboardService } from '../services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -18,7 +18,7 @@ import { SharedService } from 'src/app/shared/shared.service';
   styleUrls: ['./dashboard-page.component.scss'],
 })
 export class DashboardPageComponent implements OnInit {
-  form!: FormGroup;
+  taskForm!: FormGroup;
   importanceProperties: Importance[] = [];
   importanceOptions = ImportanceOptions;
   doing: TaskValuesType[] = [];
@@ -34,43 +34,91 @@ export class DashboardPageComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _dashboardService: DashboardService,
     private _sharedService: SharedService
-  ) {}
-
-  ngOnInit(): void {
-    this.getTasks();
+  ) {
     this._sharedService.newTodoItem$.subscribe({
-      next: (respones) => {
-        console.log(respones, 'new task in adding mode');
+      next: (responses) => {
+        console.log(responses, 'new task in adding mode');
         this.addNewTask();
       },
       error: (error) => {
         console.error('error:', error);
       },
     });
-    this.form = this._formBuilder.group({
-      card: [null],
-    });
-    this.form.valueChanges.subscribe((data) => {
-      console.log(data, 'suiiiii changesssss');
+  }
 
-      this.getTasks();
+  ngOnInit(): void {
+    this.getTasks();
+    this.taskForm = this._formBuilder.group({
+      tasks: this._formBuilder.array([])
+    });
+    this.resetFormArray();
+    this.populateFormArray();
+
+    // this.form.valueChanges.pipe(debounceTime(1500)).subscribe((data) => {
+    //   console.log(data, 'suiiiii changesssss');
+    // });
+    this._sharedService.tasks$.subscribe({
+      next: (tasks) => {
+        this.tasks = tasks;
+        this.filterTasks();
+      }
+      // Update your task lists within the three columns accordingly
+    });
+
+  }
+
+  private populateFormArray(): void {
+    // Assuming 'todo', 'doing', and 'done' are arrays of tasks
+    const formArray = this.taskForm.get('tasks') as FormArray;
+
+    while (formArray.length !== 0) {
+      formArray.removeAt(0);
+    }
+    this.tasks.forEach(task => {
+      const taskFormGroup = this.createTaskFormGroup(task);
+      formArray.push(taskFormGroup);
+    });
+
+    const todoFormArray = this.taskForm.get('tasks') as FormArray;
+    this.todo.forEach(task => {
+      todoFormArray.push(this.createTaskFormGroup(task));
+    });
+    const doingFormArray = this.taskForm.get('tasks') as FormArray;
+    this.doing.forEach(task => {
+      doingFormArray.push(this.createTaskFormGroup(task));
+    });
+
+    const doneFormArray = this.taskForm.get('tasks') as FormArray;
+    this.done.forEach(task => {
+      doneFormArray.push(this.createTaskFormGroup(task));
+    });
+  }
+
+  private createTaskFormGroup(task: TaskValuesType): FormGroup {
+    return this._formBuilder.group({
+      id: [task.id],
+      title: [task.title],
+      category: [task.category],
+      dueDate: [task.dueDate],
+      estimate: this._formBuilder.group({
+        id: [task.estimate.id],
+        number: [task.estimate.number],
+        unit: [task.estimate.unit],
+      }),
+      importance: [task.importance],
+      status: [task.status],
     });
   }
 
   drop(event: CdkDragDrop<TaskValuesType[]>, status: TaskStatus) {
-    const movedTask = event.item.data;
-    console.log(movedTask, 'movedTask');
+    const formArray = this.taskForm.get('tasks') as FormArray;
+    const movedTaskFormGroup = formArray.at(event.previousIndex) as FormGroup;
+    console.log("Moved Task", movedTaskFormGroup);
     if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      console.log(status);
+      moveItemInArray(formArray.controls, event.previousIndex, event.currentIndex);
     } else {
-      movedTask.status = status;
-      console.log(movedTask.status, 'status');
-      this.onStatusChanged(movedTask);
+      movedTaskFormGroup.get('status')?.setValue(status);
+      this.onStatusChanged(movedTaskFormGroup.value);
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -94,7 +142,7 @@ export class DashboardPageComponent implements OnInit {
       next: (response: TaskValuesType[]) => {
         console.log('response:', response);
         this.tasks = response;
-        this.filterTasks(response);
+        this.filterTasks();
       },
       error: (error) => {
         console.error('error:', error);
@@ -102,16 +150,28 @@ export class DashboardPageComponent implements OnInit {
     });
   }
 
-  filterTasks(tasks: TaskValuesType[]) {
-    for (const task of tasks) {
-      if (task.status == this.taskStatus.TODO) {
-        this.todo.push(task);
-      } else if (task.status == this.taskStatus.DOING) {
-        this.doing.push(task);
-      } else if (task.status == this.taskStatus.DONE) {
-        this.done.push(task);
-      }
-    }
+  filterTasks() {
+    this.taskForm.get('tasks')?.reset();
+
+    // Assuming 'todo', 'doing', and 'done' are arrays of tasks
+    const todoFormArray = this.taskForm.get('tasks') as FormArray;
+    this.todo.forEach(task => {
+      todoFormArray.push(this.createTaskFormGroup(task));
+    });
+
+    const doingFormArray = this.taskForm.get('tasks') as FormArray;
+    this.doing.forEach(task => {
+      doingFormArray.push(this.createTaskFormGroup(task));
+    });
+
+    const doneFormArray = this.taskForm.get('tasks') as FormArray;
+    this.done.forEach(task => {
+      doneFormArray.push(this.createTaskFormGroup(task));
+    });
+  }
+  private resetFormArray(): void {
+    const formArray = this.taskForm.get('tasks') as FormArray;
+    formArray.clear();
   }
   addNewTask() {
     const taskItem: TaskValuesType = {

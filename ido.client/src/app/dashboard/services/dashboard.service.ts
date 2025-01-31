@@ -23,7 +23,7 @@ export class DashboardService {
     return this._http.put(url, updatedData);
   }
 
-  updateTask(data: TaskValuesType) {
+  updateTask(data: TaskValuesType): Observable<TaskValuesType> {
     return this._http.patch<TaskValuesType>(`${this.baseUrl}${data.id}`, data);
   }
 
